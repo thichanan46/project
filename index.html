@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>name</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script type="text/javascript" src="./src/app.js" defer></script>
+
+  <!-- import JQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  
+  <!-- import Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- import Leaflet Ajax -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js" integrity="sha512-Abr21JO2YqcJ03XGZRPuZSWKBhJpUAR6+2wH5zBeO4wAw4oksr8PRdF+BKIRsxvCdq+Mv4670rZ+dLnIyabbGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- import Leaflet Ver1.7.1 for leaflet-measure-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- import leaflet-measure -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-measure/dist/leaflet-measure.css" />
+  <script src="https://unpkg.com/leaflet-measure/dist/leaflet-measure.js"></script>
+
+  <!-- import switchBasemap -->
+  <link href="./src/L.switchBasemap.css" rel="stylesheet">
+  <script src="./src/L.switchBasemap.js"></script>
+
+  <!-- import geoserver -->
+  <script src="./src/shp.js"></script>
+
+</head>
+<body>
+  <nav id="sidebar">
+    <ul>
+      <li>
+        <span class="logo">name District</span>
+        <button onclick=toggleSidebar() id="toggle-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+        </button>
+      </li>
+      <li class="active">
+        <a href="index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"/></svg>
+          <span>Home</span>
+        </a>
+      </li>
+ <!--      <li>
+        <a href="dashboard.html">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
+          <span>Dashboard</span>
+        </a>
+      </li> -->
+      <li>
+        <button onclick=toggleSubMenu(this) class="dropdown-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h207q16 0 30.5 6t25.5 17l57 57h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Zm400-160v40q0 17 11.5 28.5T600-320q17 0 28.5-11.5T640-360v-40h40q17 0 28.5-11.5T720-440q0-17-11.5-28.5T680-480h-40v-40q0-17-11.5-28.5T600-560q-17 0-28.5 11.5T560-520v40h-40q-17 0-28.5 11.5T480-440q0 17 11.5 28.5T520-400h40Z"/></svg>
+          <span>Data</span>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/></svg>
+        </button>
+        <ul class="sub-menu">
+          <div>
+            <li><a href="#">Folder</a></li>
+            <li><a href="#">Document</a></li>
+            <li><a href="#">Project</a></li>
+          </div>
+        </ul>
+      </li>
+      <li>
+        <button onclick=toggleSubMenu(this) class="dropdown-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m221-313 142-142q12-12 28-11.5t28 12.5q11 12 11 28t-11 28L250-228q-12 12-28 12t-28-12l-86-86q-11-11-11-28t11-28q11-11 28-11t28 11l57 57Zm0-320 142-142q12-12 28-11.5t28 12.5q11 12 11 28t-11 28L250-548q-12 12-28 12t-28-12l-86-86q-11-11-11-28t11-28q11-11 28-11t28 11l57 57Zm339 353q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h280q17 0 28.5 11.5T880-320q0 17-11.5 28.5T840-280H560Zm0-320q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h280q17 0 28.5 11.5T880-640q0 17-11.5 28.5T840-600H560Z"/></svg>
+          <span>Todo-Lists</span>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/></svg>
+        </button>
+        <ul class="sub-menu">
+          <div>
+            <li><a href="#">Work</a></li>
+            <li><a href="#">Private</a></li>
+            <li><a href="#">Coding</a></li>
+            <li><a href="#">Gardening</a></li>
+            <li><a href="#">School</a></li>
+          </div>
+        </ul>
+      </li>
+      <li>
+        <a href="calendar.html">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"/></svg>
+          <span>Calendar</span>
+        </a>
+      </li>
+      <li>
+        <a href="profile.html">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+    <div id="map" style="height: 100vh;"></div>
+  <main>
+    <script>
+
+      var map = L.map('map', {
+      center: [16.45423958666, 102.66451734152011],
+      zoom: 15,
+      zoomControl: false 
+    });
+
+      new L.basemapsSwitcher([
+      {
+        layer: L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+          attribution: '© OpenStreetMap contributors',
+        }).addTo(map), //DEFAULT MAP
+        icon: './img/sat1.png',
+        name: 'Satel Map'
+      },
+      {
+        layer: L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }),
+        icon: './img/street1.PNG',
+        name: 'OpenSt Map'
+      },
+      {
+        layer: L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',{
+          attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        }),
+        icon: './img/stadia1.PNG',
+        name: 'Stad Map'
+      },
+    ], { position: 'topright' }).addTo(map);
+
+  
+      //Measure
+      var measureControl = new L.control.measure({
+        primaryLengthUnit: 'kilometers', // หน่วยวัดระยะทาง (กิโลเมตร)
+        secondaryLengthUnit: 'meters',  // หน่วยรอง
+        primaryAreaUnit: 'hectares',    // หน่วยวัดพื้นที่ (เฮกตาร์)
+        secondaryAreaUnit: 'sqmeters', // หน่วยรอง
+        activeColor: '#db4a29',         // สีเส้นวัดที่กำลังใช้งาน
+        completedColor: '#9b2d14'       // สีเส้นวัดที่เสร็จสิ้น
+      }).addTo(map);
+      measureControl.setPosition('bottomright');
+      
+      
+      // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+      
+      
+      // Geoserver
+
+      // // Thailand
+      // var wms_thailand_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Athailand&bbox=97.34335847100004%2C5.613037873000053%2C105.63696451800007%2C20.465073815000068&width=428&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers";
+
+      // var thailand = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:thailand',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // thailand.addTo(map);
+
+
+      // // จังหวัดขอนแก่น+อำเภอ
+      // var wms__khonkaen_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Akhonkaen&bbox=101.7497329711914%2C15.630491256713924%2C103.18805694580078%2C17.08752059936534&width=758&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers";
+      
+      // var khonkaen = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:khonkaen',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // khonkaen.addTo(map);
+
+
+      // // Soil
+      // var wms__soil_kk_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Asoil_kk&bbox=793299.5744000013%2C1731889.829100001%2C946151.1764000002%2C1893081.3021000002&width=728&height=768&srs=EPSG%3A32647&styles=&format=application/openlayers";
+      
+      // var soil = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: '	project_mnre:soil_kk',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // soil.addTo(map);
+
+
+      // // พื้นที่ป่าอนุรักษ์
+      // var wms__pf_kk_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Aprotectedforest_kk&bbox=793891.3684%2C1779908.6333000008%2C896450.0426999995%2C1882250.8976999999&width=768&height=766&srs=EPSG%3A24047&styles=&format=application/openlayers";
+      
+      // var pf_kk = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: '	project_mnre:protectedforest_kk',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // pf_kk.addTo(map);
+
+
+      // // ป่าสงวนขอนแก่น
+      // var wms__frkk_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Akhonkaen_forestreserve&bbox=793579.1747000003%2C1753013.3293999992%2C938724.4506999999%2C1869869.9966000002&width=768&height=618&srs=EPSG%3A32647&styles=&format=application/openlayers";
+      
+      // var fr_kk = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:khonkaen_forestreserve',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // fr_kk.addTo(map);
+
+
+      // // ป่า65
+      // var wms__fr65_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Aforestarea2565&bbox=793466.1366999997%2C1732682.9846%2C945543.5401999997%2C1893081.302100001&width=728&height=768&srs=EPSG%3A32647&styles=&format=application/openlayers";
+      
+      // var fr65 = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:forestarea2565',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // fr65.addTo(map);
+
+
+      // // ป่า66
+      // var wms__fr66_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Aforestarea2566&bbox=793466.1366999997%2C1732682.9846%2C945549.1555000003%2C1893081.302100001&width=728&height=768&srs=EPSG%3A32647&styles=&format=application/openlayers";
+      
+      // var fr66 = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:forestarea2566',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // fr66.addTo(map);
+
+
+      // // จุดความร้อน
+      // var wms__hp_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Ahotpotkk&bbox=101.75627%2C15.63804%2C103.17844%2C17.07079&width=762&height=768&srs=EPSG%3A404000&styles=&format=application/openlayers";
+      
+      // var hp_kk = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: '	project_mnre:hotpotkk',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // hp_kk.addTo(map);
+
+
+      // // water
+      // var wms__water_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Awater_kk&bbox=101.75086723763324%2C15.635427928140901%2C103.1800157876197%2C17.076313436191437&width=761&height=768&srs=EPSG%3A404000&styles=&format=application/openlayers";
+      
+      // var water_kk = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:water_kk',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // water_kk.addTo(map);
+
+
+      // // ponit_สวนป่าขอนแก่น
+      // var wms__fpkk_url = "http://localhost:8080/geoserver/project_mnre/wms?service=WMS&version=1.1.0&request=GetMap&layers=project_mnre%3Aforestpark_kk&bbox=102.43903364218892%2C15.89935579563354%2C103.08347278374202%2C16.986516698686728&width=455&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers";
+      
+      // var fp_kk = L.tileLayer.wms("http://localhost:8080/geoserver/project_mnre/wms", {
+      //   layers: 'project_mnre:forestpark_kk',
+      //   format: 'image/png',
+      //   transparent: true,
+      //   attribution: "mylayer"
+      // });
+      // fp_kk.addTo(map);
+      
+      // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+      
+    </script>
+  </main>
+</body>
+</html>

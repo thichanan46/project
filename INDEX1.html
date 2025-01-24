@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Measure Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-measure/dist/leaflet-measure.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-measure/dist/leaflet-measure.js"></script>
+
+</head>
+<body>
+  <div id="map" style="height: 100vh;"></div>
+  <script>
+    // สร้างแผนที่ Leaflet
+    const map = L.map('map').setView([51.505, -0.09], 13);
+
+    // เพิ่มแผนที่ฐาน (Tile Layer)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // เพิ่มเครื่องมือ Measure
+    L.control.measure({
+      primaryLengthUnit: 'kilometers', // หน่วยวัดระยะทาง (กิโลเมตร)
+      secondaryLengthUnit: 'meters',  // หน่วยรอง
+      primaryAreaUnit: 'hectares',    // หน่วยวัดพื้นที่ (เฮกตาร์)
+      secondaryAreaUnit: 'sqmeters', // หน่วยรอง
+      activeColor: '#db4a29',         // สีเส้นวัดที่กำลังใช้งาน
+      completedColor: '#9b2d14'       // สีเส้นวัดที่เสร็จสิ้น
+    }).addTo(map);
+  </script>
+</body>
+</html>
